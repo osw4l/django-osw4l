@@ -21,7 +21,6 @@ class BaseUserCreationForm(UserCreationForm):
             'is_active',
             'is_staff',
             'is_superuser',
-            'username',
         )
         fields = '__all__'
 

@@ -36,7 +36,6 @@ THIRD_PARTY_APPS = [
     'django_celery_beat',
     'django_celery_results',
     'django_extensions',
-    'channels',
     'rest_framework_swagger',
     'apps.third_party_apps.fcm',
     'recaptcha',
@@ -46,6 +45,7 @@ THIRD_PARTY_APPS = [
 PROJECT_APPS = [
     'apps',
     'apps.utils',
+    'apps.niza',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
@@ -120,27 +120,6 @@ SENGRID_SENDER_EMAIL = env('SENGRID_SENDER_EMAIL')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'django-db'
-
-#: Only add pickle to this list if your broker is secured
-#: from unwanted access (see userguide/security.html)
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-
-redis_host = os.environ.get('REDIS_HOST', 'localhost')
-
-# Channel layer definitions
-# http://channels.readthedocs.org/en/latest/deploying.html#setting-up-a-channel-backend
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'asgi_redis.RedisChannelLayer',
-        'CONFIG': {
-            'hosts': [(redis_host, 6379)],
-        },
-        'ROUTING': 'project.routing.channel_routing',
-    },
-}
 
 # Google
 GR_CAPTCHA_SECRET_KEY = env('GR_CAPTCHA_SECRET_KEY')
@@ -237,3 +216,6 @@ else:
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
+
+
+LOGIN_URL = '/login'

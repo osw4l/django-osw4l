@@ -1,0 +1,206 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block main %}
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto">
+        <h1 class="display-4">
+            Detalle del proyecto # {{ project.id }}
+            <span class="text-info">
+                 {{ project.order_id }}
+            </span>
+        </h1>
+    </div>
+    <div class="container-fluid mb-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-link active"
+                               id="nav-home-tab"
+                               data-toggle="tab"
+                               href="#nav-home"
+                               role="tab"
+                               aria-controls="nav-home"
+                               aria-selected="true">
+                                Información General
+                            </a>
+                            <a class="nav-link"
+                               id="nav-profile-tab"
+                               data-toggle="tab"
+                               href="#nav-profile" role="tab"
+                               aria-controls="nav-profile" aria-selected="false">
+                                Registro de Actividades
+                            </a>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active"
+                             id="nav-home"
+                             role="tabpanel"
+                             aria-labelledby="nav-home-tab">
+                            <div class="container-fluid mt-3 mb-3">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="card">
+
+                                            <div class="card-body">
+                                                <h4>
+                                                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                                                    Descripcion del proyecto
+                                                </h4>
+                                                <div class="form-group" disabled>
+                                                    <label for="des"></label>
+                                                    <textarea id="des" class="form-control text-left"
+                                                              disabled rows="3">{{ project.description }}</textarea>
+                                                </div>
+
+                                                <hr/>
+
+                                                <h4>
+                                                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                                                    Trabajos a realizar
+                                                </h4>
+                                                <div>
+                                                    <ul class="list-group">
+                                                        {% for task in project.tasks.all %}
+                                                            <li class="list-group-item">
+                                                                {% if task.done %}
+                                                                    <i class="fa fa-check text-success"></i>
+                                                                {% else %}
+                                                                    <i class="fa fa-close text-danger"></i>
+                                                                {% endif %}
+                                                                {{ task.task }}
+                                                            </li>
+                                                        {% endfor %}
+
+                                                    </ul>
+                                                </div>
+
+                                                <hr/>
+
+                                                <h4>
+                                                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                                                    Perzonal de NIZA Encargado
+                                                </h4>
+                                                <div class="form-control" disabled>
+                                                    {{ project.employee.name }} - {{ project.employee.position }}
+                                                    | <i class="fa fa-phone"></i> Contacto: {{ project.employee.phone }}
+                                                </div>
+
+                                                <hr/>
+
+                                                <h4>
+                                                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                                                    Tiempo de duración del proyecto
+                                                </h4>
+                                                <div class="form-control" disabled>
+                                                    {{ project.time }} {{ project.interval }}
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h4>
+                                                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                                                    Descarga de archivos
+                                                </h4>
+                                            </div>
+                                            <div class="card-body">
+                                                <table class="table table-hover table-bordered table-striped">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Nombre</th>
+                                                        <th>Creación</th>
+                                                        <th>*</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for file in project.files.all %}
+                                                        <tr>
+                                                            <td>
+                                                                {{ file.name }}
+                                                            </td>
+                                                            <td>
+                                                                {{ file.created_at }}
+                                                            </td>
+                                                            <td>
+                                                                <a href="{{ file.file.url }}"
+                                                                   class="btn btn-success btn-block btn-sm"
+                                                                   download>
+                                                                    <i class="fa fa-download"></i>
+                                                                    Descargar
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                            <div class="container-fluid">
+                                <div class="row mt-2">
+                                    {% if project.logs.count > 0 %}
+                                        {% for log in project.logs.all %}
+                                            <div class="col-md-12 mt-1 mb-1">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h4>
+                                                            <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                                                            {{ log.name.capitalize }}
+                                                        </h4>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <textarea class="form-control"
+                                                                              rows="8"
+                                                                              disabled>{{ log.description }}</textarea>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                {% for file in log.logs.all %}
+                                                                    <img src="{{ file.file.url }}"
+                                                                             alt="{{ file.created_at }}"
+                                                                             class="img-thumbnail mt-2 mr-2"
+                                                                            style="height: 200px; width: 200px">
+                                                                    {% endfor %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% else %}
+                                        <div class="col-md-4 offset-md-4">
+                                            <div class="card mt-5 mb-5">
+                                                <div class="card-body text-center">
+                                                    <img src="https://image.flaticon.com/icons/svg/2275/2275514.svg"
+                                                         width="70%"  alt="">
+                                                    <h3 class="text-center text-info">Lo sentimos</h3>
+                                                    <h4 class="text-center">
+                                                        En este momento no hay registro de actividades
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

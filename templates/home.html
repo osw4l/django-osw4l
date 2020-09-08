@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block main %}
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">Bienvenido a niza</h1>
+        <p class="lead">
+            Seleccione una opcion
+        </p>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 offset-md-2">
+                <div class="card mb-4 shadow-sm text-center">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal text-center">Proyectos</h4>
+                    </div>
+                    <div class="card-body">
+                        <img src="{% static 'project.png' %}" alt="" width="200px" height="160px">
+                        <a href="{% url 'niza:projects' %}" class="btn btn-block btn-outline-success mt-2">
+                            Ir a proyectos
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm text-center">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal text-center">Calificación</h4>
+                    </div>
+                    <div class="card-body">
+                        <img src="{% static 'rate.png' %}" alt="" width="200px" height="160px">
+                        <button type="button" class="btn btn-block btn-warning mt-2">
+                            Califica la plataforma
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
