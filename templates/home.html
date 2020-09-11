@@ -29,12 +29,13 @@
                     </div>
                     <div class="card-body">
                         <img src="{% static 'rate.png' %}" alt="" width="200px" height="160px">
-                        <button type="button" class="btn btn-block btn-warning mt-2">
-                            Califica la plataforma
-                        </button>
+                        <a href="{% url 'niza:rate' %}" class="btn btn-block btn-warning mt-2">
+                            Califica la plataforma <i class="fa fa-star"></i>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 {% endblock %}
+

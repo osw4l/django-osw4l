@@ -12,23 +12,29 @@ class Customer(User):
         verbose_name_plural = 'Customers'
         verbose_name = 'Customer'
 
+    def count_reviews(self):
+        return CustomerReview.objects.only('id').filter(customer=self).count()
+
 
 class CustomerReview(models.Model):
-    created_at = models.DateField(
-        auto_now_add=True
-    )
-    score = models.PositiveIntegerField()
-    customer = models.OneToOneField(
-        Customer,
-        on_delete=models.CASCADE
-    )
     title = models.CharField(
         max_length=50
     )
-    comment = models.TextField()
     position = models.CharField(
         max_length=30
     )
+    customer = models.OneToOneField(
+        Customer,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='reviews'
+    )
+    created_at = models.DateField(
+        auto_now_add=True
+    )
+    comment = models.TextField()
+    score = models.PositiveIntegerField()
 
     class Meta:
         verbose_name = 'Customer Review'

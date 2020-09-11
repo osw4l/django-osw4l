@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block main %}
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        {% if request.user.customer.count_reviews == 0 %}
+            <h1 class="display-4">¿Qué te ha parecido?</h1>
+            <p class="lead">
+                Califica nuestra plataforma
+            </p>
+        {% else %}
+            <h1 class="display-4">Gracias por tu comentario</h1>
+            <p class="lead">
+                hemos recibido con exito tu calificacion
+            </p>
+        {% endif %}
+    </div>
+    <div class="container">
+        {% if request.user.customer.count_reviews == 0 %}
+            <div class="row">
+                <div class="col-md-4 offset-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <input type="text" id="title" placeholder="Nombre" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="position" placeholder="Cargo" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="comment" class="text-left">
+                                    Deja tu comentario
+                                </label>
+                                <textarea id="comment" class="form-control" placeholder="Deja tu comentario"
+                                          rows="2"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="rating" class="text-left">Tu calificación</label>
+                                <div align="center">
+                                    <select id="rating" style="margin-right: auto; margin-right: auto">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="btn btn-outline-info btn-block mt-5" id="send">
+                                Enviar calificacion
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="https://antennaio.github.io/jquery-bar-rating/dist/jquery.barrating.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#rating').barrating({
+                theme: 'fontawesome-stars'
+            });
+
+            $('#send').click(function (e) {
+                const title = $('#title').val();
+                const position = $('#position').val();
+                const comment = $('#comment').val();
+                const score = parseInt($('#rating').val());
+
+                const data = {
+                    title,
+                    position,
+                    comment,
+                    score
+                };
+
+                $.ajax({
+                    url: window.location.origin + "/niza/rating/",
+                    method: 'POST', //First change type to method here
+                    data,
+                    success: function (response) {
+                        swal("Good job!", "You clicked the button!", "success");
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+                    },
+                    error: function () {
+                        swal("error", "it cannot save the review :( !", "error");
+                    }
+
+                });
+
+            });
+
+        });
+    </script>
+{% endblock %}
