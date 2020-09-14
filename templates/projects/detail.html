@@ -167,12 +167,29 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                {% for file in log.logs.all %}
-                                                                    <img src="{{ file.file.url }}"
-                                                                             alt="{{ file.created_at }}"
-                                                                             class="img-thumbnail mt-2 mr-2"
-                                                                            style="height: 200px; width: 200px">
+                                                                <div class="row">
+                                                                    {% for file in log.logs.all %}
+                                                                        <div class="col-md-3 mb-3">
+                                                                            <div class="card" style="width: 18rem;">
+                                                                                <div class="card-body">
+                                                                                    <img src="{{ file.file.url }}"
+                                                                                         alt="{{ file.created_at }}"
+                                                                                         class="img-thumbnail mt-2 mr-2"
+                                                                                         style="height: 200px; width: 100%"
+                                                                                    >
+                                                                                </div>
+                                                                                <div class="card-footer">
+                                                                                    <a href="{{ file.file.url }}"
+                                                                                       class="btn btn-success btn-block btn-sm"
+                                                                                       download>
+                                                                                        <i class="fa fa-download"></i>
+                                                                                        Descargar
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
                                                                     {% endfor %}
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -184,7 +201,7 @@
                                             <div class="card mt-5 mb-5">
                                                 <div class="card-body text-center">
                                                     <img src="https://image.flaticon.com/icons/svg/2275/2275514.svg"
-                                                         width="70%"  alt="">
+                                                         width="70%" alt="">
                                                     <h3 class="text-center text-info">Lo sentimos</h3>
                                                     <h4 class="text-center">
                                                         En este momento no hay registro de actividades
