@@ -1,7 +1,7 @@
 Django==2.2
 pytz==2018.9
 django-sendgrid-v5==0.8.0
-celery==4.1.1
+celery==5.2.2
 https://github.com/formatcom/django-celery-beat/zipball/v1.1.1#egg=django-celery-beat
 https://github.com/formatcom/django-celery-results/zipball/v1.1.0#egg=django-celery-results
 django-celerybeat-status==0.0.10
